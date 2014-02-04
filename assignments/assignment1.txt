@@ -81,7 +81,7 @@ Problem 5.2, Kung page 138
 Produce a one-page description of the business operation for a hotel reservation system. State practical and reasonable assumptions.
 [Instructor note: this exercise is to produce what is affectionately known as a 'problem statement'.]
 
-A system must be created that is able to manage the rooms and tenants of a hotel. It must allow for the customer service representatives to check the availability of rooms, see what kind of room each room is (ie. double be, single be etc), and be able to reserve a room out for a tenants for a certain period of time.  The system must also be able to keep track of all the tenants by storing their name and credit card/payment information.  It should also be able to calculate the amount that is to be charge to a person based on the length of stay and should allow for the hotel employees to make adjustments based on room services, minibar purchases or room service.
+A system must be created that is able to manage the rooms and tenants of a hotel. It must allow for the customer service representatives to check the availability of rooms, see what kind of room each room is (ie. double bed, single bed etc), and be able to reserve a room out for a tenants for a certain period of time.  The system must also be able to keep track of all the tenants by storing their name and credit card/payment information.  It should also be able to calculate the amount that is to be charge to a person based on the length of stay and should allow for the hotel employees to make adjustments based on room services, minibar purchases or room service.
 
 
 Problem 5.5, Kung page 138
