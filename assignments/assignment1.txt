@@ -36,13 +36,13 @@ Provide a brief description of the functions of a vending machine. Identify and 
 Requirements:
 1: Be able to recognize inserted money
     1.1: Recognize coins in the coin slot
-        1.1a: Recognize a nickel as $0.5
-        1.1b: Recognize a dime as $0.10
-        1.1c: Recognize a quarter as $0.25
-        1.1d: Pennies are not accepted and should fall through to change return
+        1.1.1: Recognize a nickel as $0.5
+        1.1.2: Recognize a dime as $0.10
+        1.1.3: Recognize a quarter as $0.25
+        1.1.4: Pennies are not accepted and should fall through to change return
     1.2: Recognize $1bills as $1.00
-        1.2a: Spit other bills back out
-        1.2b: Spit crumpled or wrongly inserted bills back out
+        1.2.1: Spit other bills back out
+        1.2.2: Spit crumpled or wrongly inserted bills back out
     1.3: Return all money when return button is pressed
 2: Be able to accumulate amount of money inserted
     2.1: Keep a running tally of the amount of money inserted
@@ -52,6 +52,43 @@ Requirements:
     3.2: Compare the amount of money inserted to the amount required
     3.3: Dispense the selected soda
     3.4: Return excess change
+
+
+Problem 4.1, Kung page 103
+
+Produce a software requirements specification (SRS) for a library information system that is similar to the system in use in your school. At the minimum, the system should prvide functions to all ow the patron to search, check out, and return documents, respectively.
+[Instructor note: this is also a thinking exercise, so again try to do your best.]
+
+1: Keep a database of existing books
+    1.1: Allow for admin users (librarians)
+        1.1.1: Allow admins to be able to add/delete books from the database
+2: Allow users to checkout a book
+    2.1: Allow a user to search for a given book
+        2.1.1: Search by author
+        2.1.2: Search by title
+        2.1.3: Search by isbn
+        2.1.4: Search by genre
+    2.2: Allow users to select the book they want to checkout
+        2.2.1: Verify that the book is in stock
+    2.3: Assigns a checked out book to a user
+        2.3.1: Updates the database to reflect the status of the book
+3: Allow users to return a book
+    3.1: Updates the database to reflect the status of the book
+
+
+Problem 5.2, Kung page 138
+
+Produce a one-page description of the business operation for a hotel reservation system. State practical and reasonable assumptions.
+[Instructor note: this exercise is to produce what is affectionately known as a 'problem statement'.]
+
+A system must be created that is able to manage the rooms and tenants of a hotel. It must allow for the customer service representatives to check the availability of rooms, see what kind of room each room is (ie. double be, single be etc), and be able to reserve a room out for a tenants for a certain period of time.  The system must also be able to keep track of all the tenants by storing their name and credit card/payment information.  It should also be able to calculate the amount that is to be charge to a person based on the length of stay and should allow for the hotel employees to make adjustments based on room services, minibar purchases or room service.
+
+
+Problem 5.5, Kung page 138
+
+Draw a UML class diagram as a domain model based on the classification results produced in exercise 5.4. [Instructor note: exercises 5.3 and 5.4 ask you to brainstorm and classify the reservation system from exercise 5.2 which is according to the book's method of performing an analysis. You will need to think about those interim steps, but you only need to turn in the results for this exercise.]
+
+
 
 
 
