@@ -26,7 +26,33 @@ What are the similarities and differences between the conventional waterfall mod
 
 The waterfall process creates a linear structure of several stages of a project like requirements, design, implementation, testing, and maintenance, where each stage needs to be completed before the next stage can begin.
 Disadvantages to this method include that it needs all requirements to be defined up front (Big Up Front Requirements BUFP) which can slow down the initial process.  It also is not able to respond well to changing requirements because of its strict structure and up front planning and it also does not allow users to experiment with the product until it is fully released to give feedback.  The advantages to the waterfall model are that the linear structure greatly simplifies the project planning, the segregated phases allows for easy partitioning of work on a project among different teams in a business (each team can specialize in a single phase), and the structured requirements allows for rigorous and effectively testing of the product.
-The unified process model consists of a series of cycles grouped into 4 phases (inception, elaboration, construction, and transition) where each cycle results in a release of a version of the system.  Disadvantages to the unified process model include a lack of requirements leading to a lack of testing clarity because the requirements are being finalized and adjusted and the project goes on.  Because the project is changing and constantly rereleased, the UP model may take a longer time to get a final release than the waterfall method, and there is less structure which can lead to more complicated in-depth project planning.  
+The unified process model consists of a series of cycles grouped into 4 phases (inception, elaboration, construction, and transition) where each cycle results in a release of a version of the system.  Disadvantages to the unified process model include a lack of requirements leading to a lack of testing clarity because the requirements are being finalized and adjusted and the project goes on.  Because the project is changing and constantly rereleased, the UP model may take a longer time to get a final release than the waterfall method, and there is less structure which can lead to more complicated in-depth project planning.  The advantages to the UP model is that it is able to start producing something right away without a lot of BUFP time, the multiple releases of versions of the product allows for user feedback throughout the process, and the iterative nature of the project allows mistakes or misdesigns to be caught early and often.
+
+
+Problem 3.1, Kung page 76
+Provide a brief description of the functions of a vending machine. Identify and formulate all functional and performance requirements.
+[Instructor note: this is a thinking exercise, so try to do your best to come up with as many requirements as you can. This exercise will be useful for you when you write your SRS for your project.]
+
+Requirements:
+1: Be able to recognize inserted money
+    1.1: Recognize coins in the coin slot
+        1.1a: Recognize a nickel as $0.5
+        1.1b: Recognize a dime as $0.10
+        1.1c: Recognize a quarter as $0.25
+        1.1d: Pennies are not accepted and should fall through to change return
+    1.2: Recognize $1bills as $1.00
+        1.2a: Spit other bills back out
+        1.2b: Spit crumpled or wrongly inserted bills back out
+    1.3: Return all money when return button is pressed
+2: Be able to accumulate amount of money inserted
+    2.1: Keep a running tally of the amount of money inserted
+    2.2: Display the amount inserted on an LCD screen
+3: Allow users to select a soda by press one of several different type of sodas buttons
+    3.1: Identify the selected soda by the button pressed
+    3.2: Compare the amount of money inserted to the amount required
+    3.3: Dispense the selected soda
+    3.4: Return excess change
+
 
 
 
