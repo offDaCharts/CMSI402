@@ -9,4 +9,4 @@ There are similar mobile and glass workout apps like strava or race yourself, bu
 
 Name Ideas Bike with Friends? (or strangers)
 
-Check our the [[ SRS ]] document
+See more in the wiki pages!
