@@ -88,7 +88,7 @@ Problem 5.5, Kung page 138
 
 Draw a UML class diagram as a domain model based on the classification results produced in exercise 5.4. [Instructor note: exercises 5.3 and 5.4 ask you to brainstorm and classify the reservation system from exercise 5.2 which is according to the book's method of performing an analysis. You will need to think about those interim steps, but you only need to turn in the results for this exercise.]
 
-
+See UML image attached
 
 
 
