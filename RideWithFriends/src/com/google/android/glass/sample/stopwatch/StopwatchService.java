@@ -69,6 +69,8 @@ public class StopwatchService extends Service {
         } else {
             // TODO(alainv): Jump to the LiveCard when API is available.
         }
+        
+        
 
         return START_STICKY;
     }

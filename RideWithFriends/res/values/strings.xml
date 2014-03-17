@@ -16,6 +16,6 @@
 
 <resources>
     <string name="app_name">RideWithFriends</string>
-    <string name="start_stopwatch">start a stopwatch</string>
+    <string name="start_stopwatch">Start a Bike Ride</string>
     <string name="stop">Stop</string>
 </resources>
