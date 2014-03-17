@@ -19,23 +19,37 @@ import android.content.Context;
 public class GPSActivity extends Activity {
 
     private LocationManager mgr=null;
+    private String current_location = "not yet initialized";
 	
 	public GPSActivity() {
+        Log.d("GPS_service", "gps constructor");
+        current_location = "through gps constructor";
+	}
+	
+	@Override
+	public void onCreate(Bundle icicle) {
+	    super.onCreate(icicle);
+	    //setContentView(R.layout.main);
+	    current_location = "creating gps";
+	    
 	    mgr=(LocationManager)getSystemService(LOCATION_SERVICE);
+	    
+        Log.d("GPS_service", "Setting up gps");
+        System.out.println("hello");
+	    
+	    mgr.requestSingleUpdate(LocationManager.GPS_PROVIDER,
+		    	onLocationChange, null);
+	    
+	    mgr.requestLocationUpdates(LocationManager.GPS_PROVIDER,
+		    	5000, 1,  //5000 milliseconds, mindistance of 1 meter
+		    	onLocationChange);
 	}
 	
 	public String getLocString() {
-		return null;
+		return current_location;
 	}
-	
-
        
     
-    
-//    //get updates
-//    mgr.requestLocationUpdates(LocationManager.GPS_PROVIDER,
-//            3600000, 1000,
-//            onLocationChange);
 //    
 //    String url=String.format(format, loc.getLatitude(),
 //            loc.getLongitude());
@@ -48,6 +62,7 @@ public class GPSActivity extends Activity {
         public void onLocationChanged(Location loc) {
           String locationString=loc.getLatitude() + "," + loc.getLongitude();
           Log.d("GPS_service", locationString);
+          current_location = locationString;
         }
         
         public void onProviderDisabled(String provider) {

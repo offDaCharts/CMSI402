@@ -50,6 +50,9 @@ public class ChronometerView extends FrameLayout {
     private final TextView mMinuteView;
     private final TextView mSecondView;
     private final TextView mCentiSecondView;
+    private final TextView locDisplay;
+    
+    private String current_location = "waiting";
 
     private boolean mStarted;
     private boolean mForceStart;
@@ -60,7 +63,7 @@ public class ChronometerView extends FrameLayout {
 
     private ChangeListener mChangeListener;
     
-    private GPSActivity gps;
+    private GPSActivity gps = new GPSActivity();
 
     public ChronometerView(Context context) {
         this(context, null, 0);
@@ -77,6 +80,7 @@ public class ChronometerView extends FrameLayout {
         mMinuteView = (TextView) findViewById(R.id.minute);
         mSecondView = (TextView) findViewById(R.id.second);
         mCentiSecondView = (TextView) findViewById(R.id.centi_second);
+        locDisplay = (TextView) findViewById(R.id.locationTextBox);
 
         setBaseMillis(SystemClock.elapsedRealtime());
     }
@@ -117,8 +121,8 @@ public class ChronometerView extends FrameLayout {
      */
     public void start() {
     	//gps
-    	gps = new GPSActivity();
-
+    	current_location = gps.getLocString();
+    	
     	mStarted = true;
         updateRunning();
       
@@ -187,6 +191,10 @@ public class ChronometerView extends FrameLayout {
         mSecondView.setText(String.format("%02d", TimeUnit.MILLISECONDS.toSeconds(millis)));
         millis = (millis % TimeUnit.SECONDS.toMillis(1)) / 10;
         mCentiSecondView.setText(String.format("%02d", millis));
+        
+        current_location = gps.getLocString();
+        locDisplay.setText(current_location);
+        
         if (mChangeListener != null) {
             mChangeListener.onChange();
         }

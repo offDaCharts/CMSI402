@@ -40,4 +40,15 @@
             android:id="@+id/centi_second"
             style="@style/ChronometerComponent" />
     </LinearLayout>
+
+    <EditText
+        android:id="@+id/locationTextBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:text="location" >
+
+        <requestFocus />
+    </EditText>
+
 </FrameLayout>
