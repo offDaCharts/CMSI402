@@ -27,14 +27,6 @@ import android.widget.TextView;
 
 import java.util.concurrent.TimeUnit;
 
-//GPS stuff
-import android.app.Activity;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
-import android.os.Bundle;
-import android.content.Context;
-
 
 
 /**
@@ -52,8 +44,6 @@ public class ChronometerView extends FrameLayout {
         public void onChange();
     }
     
-    private LocationManager mgr=null;
-
     // About 24 FPS.
     private static final long DELAY_MILLIS = 41;
 
@@ -69,6 +59,8 @@ public class ChronometerView extends FrameLayout {
     private long mBaseMillis;
 
     private ChangeListener mChangeListener;
+    
+    private GPSActivity gps;
 
     public ChronometerView(Context context) {
         this(context, null, 0);
@@ -124,24 +116,8 @@ public class ChronometerView extends FrameLayout {
      * Start the chronometer.
      */
     public void start() {
-        //start gps tracking
-        mgr=(LocationManager)getSystemService(LOCATION_SERVICE);
-        mgr=(LocationManager)Context.getSystemService(Context.LOCATION_SERVICE);
-        
-        
-        
-//        //get updates
-//        mgr.requestLocationUpdates(LocationManager.GPS_PROVIDER,
-//                3600000, 1000,
-//                onLocationChange);
-//        
-//        String url=String.format(format, loc.getLatitude(),
-//                loc.getLongitude());
-//    	
-//        //pause
-//        mgr.removeUpdates(onLocationChange);
-//        
-
+    	//gps
+    	gps = new GPSActivity();
 
     	mStarted = true;
         updateRunning();
@@ -217,24 +193,6 @@ public class ChronometerView extends FrameLayout {
     }
     
     
-    LocationListener onLocationChange=new LocationListener() {
-        public void onLocationChanged(Location loc) {
-          String locationString=loc.getLatitude() + "," + loc.getLongitude();
-          Log.d("GPS_service", locationString);
-        }
-        
-        public void onProviderDisabled(String provider) {
-          // required for interface, not used
-        }
-        
-        public void onProviderEnabled(String provider) {
-          // required for interface, not used
-        }
-        
-        public void onStatusChanged(String provider, int status,
-                                      Bundle extras) {
-          // required for interface, not used
-        }
-      };
+
     
 }
