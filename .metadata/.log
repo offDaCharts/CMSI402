@@ -1,0 +1,25 @@
+!SESSION 2014-03-16 20:43:38.648 -----------------------------------------------
+eclipse.buildId=v22.3.0-887826
+java.version=1.6.0_26
+java.vendor=Apple Inc.
+BootLoader constants: OS=macosx, ARCH=x86_64, WS=cocoa, NL=en_US
+Framework arguments:  -product com.android.ide.eclipse.adt.package.product -keyring /Users/Zihuatanejo/.eclipse_keyring -showlocation
+Command-line arguments:  -os macosx -ws cocoa -arch x86_64 -product com.android.ide.eclipse.adt.package.product -keyring /Users/Zihuatanejo/.eclipse_keyring -showlocation
+
+!ENTRY org.eclipse.core.net 1 0 2014-03-16 20:44:32.856
+!MESSAGE System property http.nonProxyHosts has been set to local|*.local|169.254/16|*.169.254/16 by an external source. This value will be overwritten using the values from the preferences
+
+!ENTRY com.android.ide.eclipse.adt 1 0 2014-03-16 20:45:12.110
+!MESSAGE NPW ignoring malformed manifest /Users/Zihuatanejo/Develop/adt-bundle-mac-x86_64-20131030/sdk/samples/android-19/connectivity/CardReader/CardReaderSample/tests/AndroidManifest.xml
+
+!ENTRY com.android.ide.eclipse.adt 1 0 2014-03-16 20:45:12.515
+!MESSAGE NPW ignoring malformed manifest /Users/Zihuatanejo/Develop/adt-bundle-mac-x86_64-20131030/sdk/samples/android-19/ui/SlidingTabsBasic/SlidingTabsBasicSample/tests/AndroidManifest.xml
+
+!ENTRY com.android.ide.eclipse.adt 4 0 2014-03-16 20:45:18.747
+!MESSAGE Failed to load properties file for project 'CompassMenuActivity'
+
+!ENTRY com.android.ide.eclipse.adt 1 0 2014-03-16 20:45:46.974
+!MESSAGE NPW ignoring malformed manifest /Users/Zihuatanejo/Develop/adt-bundle-mac-x86_64-20131030/sdk/samples/android-19/connectivity/CardReader/CardReaderSample/tests/AndroidManifest.xml
+
+!ENTRY com.android.ide.eclipse.adt 1 0 2014-03-16 20:45:47.084
+!MESSAGE NPW ignoring malformed manifest /Users/Zihuatanejo/Develop/adt-bundle-mac-x86_64-20131030/sdk/samples/android-19/ui/SlidingTabsBasic/SlidingTabsBasicSample/tests/AndroidManifest.xml

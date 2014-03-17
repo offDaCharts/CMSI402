@@ -1,4 +1,2 @@
-mirror-quickstart-java/src/main/resources/oauth.properties
-mirror-quickstart-python-master/client_secrets.json
 .project
-*/bin/*
+.DS_Store
