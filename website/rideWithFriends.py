@@ -115,43 +115,10 @@ def logout():
     logout_user()
     return redirect(url_for("show_home"))
 
-
-
-# @app.route('/create/<name>/<password>')
-# def create_user(name, password):
-#     print db['users'].find_one({'username': name})
-#     if db['users'].find_one({'username': name}) is None:
-#         user = User(username=name, password=password)
-#         return 'inserted'
-#     else:
-#         return 'exists'
-
-
-# @app.route("/login/<name>/<password>", methods=["GET", "POST"])
-# def login(name, password):
-#     user = User(username=name, password=password)
-
-#     if True:
-#     #form = LoginForm()
-#     #if form.validate_on_submit():
-#         # login and validate the user...
-#         login_user(user)
-#         flash("Logged in successfully.")
-#         return redirect(request.args.get("next") or url_for("index"))
-#     #return render_template("login.html", form=form)
-#     return 'success'
-
-
-# def createUser(password, username):
-#     password_hash = bcrypt.generate_password_hash(password + 'garlic_salt')
-#     return db['users'].insert({'username': username, 'password_hash': password_hash})
-
-# def checkLogin(password, username):
-#     user = db['users'].findOne({'username': username})
-#     if bcrypt.check_password_hash(user['password_hash'], password + 'garlic_salt'):
-#         return user._id
-#     else:
-#         return -1
+## Internal Functions
+@app.before_request
+def before_request():
+    g.user = current_user
 
 # App Configuration
 # This section holds all application specific configuration options.

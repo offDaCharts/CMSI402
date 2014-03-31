@@ -35,6 +35,17 @@
           {%block nav%}{%endblock%}
         </ul>
         <ul class="nav navbar-nav navbar-right">
+          {% if not g.user.is_anonymous() %}
+            <li><a href="#" class="dropdown-toggle" data-toggle="dropdown">Logged in as
+              {{ g.user.username }}
+              <b class="caret"></b>
+            </a></li>
+            <li><a href="{{ url_for('logout') }}">Logout</a></li>
+          {% else %}
+            <li><a href="{{ url_for('login') }}">Login</a></li>
+          {% endif %}
+
+
           {%block navright%}{%endblock%}
         </ul>
       </div><!--/.nav-collapse -->
@@ -51,6 +62,7 @@
         var urlArray = window.location.href.split("/");
         $('a[href ="/' +urlArray[3]+'"]').parents("li").toggleClass("active");
     })();
+
   </script>
   {%block javascript%}{%endblock%}
   </body>
