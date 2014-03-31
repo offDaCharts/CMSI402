@@ -3,20 +3,155 @@ import requests
 import flask
 
 from flask import Flask, render_template, redirect, url_for, request, Response, abort, make_response, flash
+from flask import abort, flash, Flask, g, make_response, render_template, redirect, request, Response, session, url_for
 from pymongo import Connection
 from functools import wraps
 from flaskext.bcrypt import Bcrypt
+from flask.ext import admin, login
+from flask.ext.login import LoginManager, login_user, UserMixin, login_required, logout_user, current_user
+from flask.ext.wtf import Form
+from wtforms import BooleanField, TextField, PasswordField, validators
+
+
 
 app = Flask(__name__)
 app.config.from_object(__name__)
 app.secret_key = 'this is the secret'
 bcrypt = Bcrypt(app)    
+
+login_manager = LoginManager()
+login_manager.init_app(app)
+
+connection = Connection()
+db = connection['rideWithFriends']
+
+@login_manager.user_loader
+def load_user(userid):
+    return User.get(userid)
+
+# # Create user model
+class User(UserMixin):
+
+    def __init__(self, uid=None, username=None, password=None):
+        query = {}
+        if uid is not None: query['_id'] = uid 
+        if username is not None: query['username'] = username 
+        if password is not None: query['password'] = bcrypt.generate_password_hash(password + 'garlic_salt') 
+        existing = db['users'].find_one(query) 
+
+        if existing is not None:
+            self.username = existing['username']
+            self.id = existing['_id']
+            self.password = existing['password']
+        else:
+            password_hash = bcrypt.generate_password_hash(password + 'garlic_salt')
+            self.id = db['users'].insert({'username': username, 'password': password_hash})
+            self.username = username
+            self.password = password_hash
+        self.active = True
+
+    # Flask-Login integration
+    def is_authenticated(self):
+        return True
+
+    def is_active(self):
+        return self.active
+
+    def is_anonymous(self):
+        return False
+
+    def get_id(self):
+        return self.id
+
+    def get_username(self):
+        return self.username
+
+    def get_password(self):
+        return self.password
+
+
       
 @app.route('/')
 def show_home():
     return render_template('home.html')
 
+@app.route('/loginPage')
+def show_login():
+    return render_template('login.html')
 
+# Create user loader function
+@login_manager.user_loader
+def load_user(userid):
+    return User(uid=userid)
+
+class LoginForm(Form):
+    username = TextField('Username', [validators.Required()])
+    password = PasswordField('Password', [validators.Required()])
+    remember = BooleanField('Remember Me', default=False)
+
+@app.route("/login", methods=["GET", "POST"])
+def login():
+    form = LoginForm()
+    if form.validate_on_submit():
+        user = User(username=form.username.data, password=form.password.data)
+        if user.active is not False:
+            login_user(user, remember=form.remember.data)
+            flash("Welcome to PLAnet, %s!" % user.username, 'success')
+            return redirect(request.args.get('next') or url_for("show_home"))
+        else:
+            flash("Sorry, but your login attempt did not succeed.", 'danger')
+
+    return render_template("login.html", form=form)
+
+@login_manager.unauthorized_handler
+def unauthorized():
+    return redirect(url_for("login"))
+
+
+@app.route("/logout", methods=["GET", "POST"])
+@login_required
+def logout():
+    flash("Thank you, come again!")
+    logout_user()
+    return redirect(url_for("show_home"))
+
+
+
+# @app.route('/create/<name>/<password>')
+# def create_user(name, password):
+#     print db['users'].find_one({'username': name})
+#     if db['users'].find_one({'username': name}) is None:
+#         user = User(username=name, password=password)
+#         return 'inserted'
+#     else:
+#         return 'exists'
+
+
+# @app.route("/login/<name>/<password>", methods=["GET", "POST"])
+# def login(name, password):
+#     user = User(username=name, password=password)
+
+#     if True:
+#     #form = LoginForm()
+#     #if form.validate_on_submit():
+#         # login and validate the user...
+#         login_user(user)
+#         flash("Logged in successfully.")
+#         return redirect(request.args.get("next") or url_for("index"))
+#     #return render_template("login.html", form=form)
+#     return 'success'
+
+
+# def createUser(password, username):
+#     password_hash = bcrypt.generate_password_hash(password + 'garlic_salt')
+#     return db['users'].insert({'username': username, 'password_hash': password_hash})
+
+# def checkLogin(password, username):
+#     user = db['users'].findOne({'username': username})
+#     if bcrypt.check_password_hash(user['password_hash'], password + 'garlic_salt'):
+#         return user._id
+#     else:
+#         return -1
 
 # App Configuration
 # This section holds all application specific configuration options.
