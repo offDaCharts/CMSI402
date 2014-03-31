@@ -1,5 +1,7 @@
 .project
 .DS_Store
-.metadata
+.metadata/
 .log
 .class
+env/
+
