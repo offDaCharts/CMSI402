@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Copyright (C) 2013 The Android Open Source Project
+<!--
+     Copyright (C) 2013 The Android Open Source Project
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -15,7 +16,12 @@
 -->
 
 <resources>
+
     <string name="app_name">RideWithFriends</string>
     <string name="start_stopwatch">Start a Bike Ride</string>
     <string name="stop">Stop</string>
+    <string name="title_activity_gps">GPSActivity</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_world">Hello world!</string>
+
 </resources>

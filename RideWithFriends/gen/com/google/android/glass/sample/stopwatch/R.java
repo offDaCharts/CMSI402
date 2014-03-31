@@ -13,6 +13,16 @@ public final class R {
     public static final class color {
         public static final int black=0x7f060000;
     }
+    public static final class dimen {
+        /**  Default screen margins, per the Android Design guidelines. 
+
+         Customize dimensions originally defined in res/values/dimens.xml (such as
+         screen margins) for sw720dp devices (e.g. 10" tablets) in landscape here.
+    
+         */
+        public static final int activity_horizontal_margin=0x7f070000;
+        public static final int activity_vertical_margin=0x7f070001;
+    }
     public static final class drawable {
         public static final int ic_colon=0x7f020000;
         public static final int ic_interpunc=0x7f020001;
@@ -21,28 +31,34 @@ public final class R {
         public static final int ic_stop=0x7f020004;
     }
     public static final class id {
-        public static final int centi_second=0x7f0a0002;
-        public static final int locationTextBox=0x7f0a0003;
-        public static final int minute=0x7f0a0000;
-        public static final int second=0x7f0a0001;
-        public static final int seconds_view=0x7f0a0004;
-        public static final int stop=0x7f0a0005;
+        public static final int action_settings=0x7f0b0005;
+        public static final int centi_second=0x7f0b0002;
+        public static final int locationTextBox=0x7f0b0003;
+        public static final int minute=0x7f0b0000;
+        public static final int second=0x7f0b0001;
+        public static final int seconds_view=0x7f0b0004;
+        public static final int stop=0x7f0b0006;
     }
     public static final class layout {
-        public static final int card_chronometer=0x7f030000;
-        public static final int card_countdown=0x7f030001;
+        public static final int activity_gps=0x7f030000;
+        public static final int card_chronometer=0x7f030001;
+        public static final int card_countdown=0x7f030002;
     }
     public static final class menu {
-        public static final int stopwatch=0x7f090000;
+        public static final int g=0x7f0a0000;
+        public static final int stopwatch=0x7f0a0001;
     }
     public static final class raw {
         public static final int countdown_bip=0x7f050000;
         public static final int start=0x7f050001;
     }
     public static final class string {
-        public static final int app_name=0x7f070000;
-        public static final int start_stopwatch=0x7f070001;
-        public static final int stop=0x7f070002;
+        public static final int action_settings=0x7f080004;
+        public static final int app_name=0x7f080000;
+        public static final int hello_world=0x7f080005;
+        public static final int start_stopwatch=0x7f080001;
+        public static final int stop=0x7f080002;
+        public static final int title_activity_gps=0x7f080003;
     }
     public static final class style {
         /** 
@@ -57,10 +73,10 @@ public final class R {
     
  API 14 theme customizations can go here. 
          */
-        public static final int AppBaseTheme=0x7f080003;
-        public static final int ChronometerComponent=0x7f080000;
-        public static final int ChronometerIcon=0x7f080001;
-        public static final int MenuTheme=0x7f080002;
+        public static final int AppBaseTheme=0x7f090003;
+        public static final int ChronometerComponent=0x7f090000;
+        public static final int ChronometerIcon=0x7f090001;
+        public static final int MenuTheme=0x7f090002;
     }
     public static final class xml {
         public static final int voice_trigger_start=0x7f040000;

@@ -43,6 +43,11 @@ public class StopwatchService extends Service {
     public void onCreate() {
         super.onCreate();
         mTimelineManager = TimelineManager.from(this);
+        
+        Log.d(TAG, "Creating intent adn start activity");
+        Intent intent = new Intent(getBaseContext(), GPSActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        getApplication().startActivity(intent);
     }
 
     @Override

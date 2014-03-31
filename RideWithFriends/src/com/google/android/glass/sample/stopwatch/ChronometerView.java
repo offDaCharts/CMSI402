@@ -24,9 +24,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.widget.FrameLayout;
 import android.widget.TextView;
+import android.content.Intent;
 
 import java.util.concurrent.TimeUnit;
-
 
 
 /**
@@ -121,8 +121,10 @@ public class ChronometerView extends FrameLayout {
      */
     public void start() {
     	//gps
-    	current_location = gps.getLocString();
+    	//gps.setup();
     	
+    	current_location = gps.getLocString();
+    
     	mStarted = true;
         updateRunning();
       
@@ -192,6 +194,7 @@ public class ChronometerView extends FrameLayout {
         millis = (millis % TimeUnit.SECONDS.toMillis(1)) / 10;
         mCentiSecondView.setText(String.format("%02d", millis));
         
+        current_location = "test";
         current_location = gps.getLocString();
         locDisplay.setText(current_location);
         

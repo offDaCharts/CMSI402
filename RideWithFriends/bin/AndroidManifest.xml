@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Copyright (C) 2013 The Android Open Source Project
+<!--
+     Copyright (C) 2013 The Android Open Source Project
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -27,28 +28,32 @@
         android:allowBackup="true"
         android:icon="@drawable/ic_lap"
         android:label="@string/app_name" >
-
         <activity
             android:name="com.google.android.glass.sample.stopwatch.MenuActivity"
+            android:enabled="true"
             android:label="@string/app_name"
-            android:theme="@style/MenuTheme"
-            android:enabled="true" >
+            android:theme="@style/MenuTheme" >
         </activity>
 
         <service
             android:name="com.google.android.glass.sample.stopwatch.StopwatchService"
-            android:icon="@drawable/ic_lap"
-            android:label="@string/app_name"
             android:enabled="true"
-            android:exported="true">
+            android:exported="true"
+            android:icon="@drawable/ic_lap"
+            android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="com.google.android.glass.action.VOICE_TRIGGER" />
             </intent-filter>
+
             <meta-data
                 android:name="com.google.android.glass.VoiceTrigger"
                 android:resource="@xml/voice_trigger_start" />
         </service>
 
+        <activity
+            android:name="com.google.android.glass.sample.stopwatch.GPSActivity"
+            android:label="@string/title_activity_gps" >
+        </activity>
     </application>
 
 </manifest>
