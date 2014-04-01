@@ -72,6 +72,11 @@ public class ChronometerView extends FrameLayout {
     public ChronometerView(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
+    
+    public void setLocation(String loc) {
+        Log.d("output", "outputting location: " + loc + " ************");
+    	locDisplay.setText(loc);
+    }
 
     public ChronometerView(Context context, AttributeSet attrs, int style) {
         super(context, attrs, style);
@@ -122,8 +127,7 @@ public class ChronometerView extends FrameLayout {
     public void start() {
     	//gps
     	//gps.setup();
-    	
-    	current_location = gps.getLocString();
+        gps.getLocationListener().checkLocation();
     
     	mStarted = true;
         updateRunning();
@@ -195,8 +199,9 @@ public class ChronometerView extends FrameLayout {
         mCentiSecondView.setText(String.format("%02d", millis));
         
         current_location = "test";
-        current_location = gps.getLocString();
-        locDisplay.setText(current_location);
+        gps.getLocationListener().checkLocation();
+        
+        //locDisplay.setText(current_location);
         
         if (mChangeListener != null) {
             mChangeListener.onChange();
