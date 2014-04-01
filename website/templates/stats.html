@@ -1,0 +1,49 @@
+{% extends "basePage.html" %}
+{%block title%}Ride Stats{%endblock%}
+{%block css%}
+<link href="/static/css/stats.css" rel="stylesheet">
+{%endblock%}
+{%block content%}
+<table id="statstable" class="table table-bordered table-striped">
+  <tr>
+    <td>Date</td>
+    <td>Distance</td>
+    <td>Time</td>
+    <td>Avg Speed</td>
+    <td>Max Speed</td>
+  </tr>
+  <tr>
+    <td>03/31/14</td>
+    <td>30.2</td>
+    <td>1:20:50</td>
+    <td>21.1</td>
+    <td>30</td>
+  </tr>
+  <tr>
+    <td>03/21/14</td>
+    <td>10</td>
+    <td>40:50</td>
+    <td>16.9</td>
+    <td>25</td>
+  </tr>
+  <tr>
+    <td>03/15/14</td>
+    <td>50</td>
+    <td>1:50:50</td>
+    <td>18</td>
+    <td>37</td>
+  </tr>
+  <tr>
+    <td>03/01/14</td>
+    <td>5</td>
+    <td>14</td>
+    <td>22</td>
+    <td>47</td>
+  </tr>
+
+</table>
+{%endblock%}
+{%block javascript%}
+    <script src="/static/js/stats.js"></script>
+{%endblock%}
+

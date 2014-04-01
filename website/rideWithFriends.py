@@ -69,7 +69,6 @@ class User(UserMixin):
     def get_password(self):
         return self.password
 
-
       
 @app.route('/')
 def show_home():
@@ -78,6 +77,14 @@ def show_home():
 @app.route('/loginPage')
 def show_login():
     return render_template('login.html')
+
+@app.route('/stats')
+def stats():
+    return render_template('stats.html')
+
+@app.route('/routes')
+def stats():
+    return render_template('routes.html')
 
 # Create user loader function
 @login_manager.user_loader
