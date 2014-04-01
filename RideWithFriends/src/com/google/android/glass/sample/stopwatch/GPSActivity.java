@@ -138,7 +138,6 @@ public class GPSActivity extends Activity {
         
         GPSActivity.locationManager.requestLocationUpdates(bestProvider, 1000, 1, gpsLocationListener);
         GPSActivity.locationManager.requestLocationUpdates(bestProvider, 1000, 1, networkLocationListener);
-        
         GPSActivity.locationManager.requestSingleUpdate(bestProvider, GPSActivity.onLocationChange, null);
 	}
 	
@@ -147,8 +146,6 @@ public class GPSActivity extends Activity {
 	        Criteria criteria = new Criteria();
 	        bestProvider = GPSActivity.locationManager.getBestProvider(criteria, true);
 			GPSActivity.locationManager.requestSingleUpdate(bestProvider, GPSActivity.onLocationChange, null);
-	        Log.d("GPS_service", "requested ********");
-
 		} catch (Exception e) {
 			
 		}

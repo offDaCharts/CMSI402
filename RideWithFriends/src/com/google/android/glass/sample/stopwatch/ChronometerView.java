@@ -26,6 +26,7 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.content.Intent;
 
+import java.text.DecimalFormat;
 import java.util.concurrent.TimeUnit;
 
 
@@ -56,6 +57,7 @@ public class ChronometerView extends FrameLayout {
     private boolean mForceStart;
     private boolean mVisible;
     private boolean mRunning;
+    public static long lastMillis = 0;
 
     private long mBaseMillis;
 
@@ -189,20 +191,38 @@ public class ChronometerView extends FrameLayout {
      */
     private void updateText() {
         long millis = SystemClock.elapsedRealtime() - mBaseMillis;
+        long currentSecond;
+        long currentMinute;
+        long currentMillis = millis;
         // Cap chronometer to one hour.
         millis %= TimeUnit.HOURS.toMillis(1);
 
-        mMinuteView.setText(String.format("%02d", TimeUnit.MILLISECONDS.toMinutes(millis)));
+        currentMinute = TimeUnit.MILLISECONDS.toMinutes(millis);
+        mMinuteView.setText(String.format("%02d", currentMinute));
         millis %= TimeUnit.MINUTES.toMillis(1);
-        mSecondView.setText(String.format("%02d", TimeUnit.MILLISECONDS.toSeconds(millis)));
+        
+        currentSecond = TimeUnit.MILLISECONDS.toSeconds(millis);
+        mSecondView.setText(String.format("%02d", currentSecond));
+        
         millis = (millis % TimeUnit.SECONDS.toMillis(1)) / 10;
         mCentiSecondView.setText(String.format("%02d", millis));
         
+        if(lastMillis + 3000 <= currentMillis) {
+        	Log.d("time", "last: " + lastMillis);
+        	Log.d("time", "current: " + currentMillis);
+        	if(GPSActivity.current_location != null) {
+        		SpeedCalc.tick(currentMillis, GPSActivity.current_location);
+        	}
+        	//one second has passed, update gps
+        	lastMillis = currentMillis;
+            gps.updateLoc();
+        }
         
-        gps.updateLoc();
         
         if(GPSActivity.current_location != null) {
-            locDisplay.setText("lon: "+GPSActivity.current_location.getLongitude());
+        	DecimalFormat df = new DecimalFormat("0.00");
+            locDisplay.setText("Speed: " + df.format(SpeedCalc.metersPerMillisToMph(SpeedCalc.instantSpeed))
+            		+ " Avg: " + df.format(SpeedCalc.metersPerMillisToMph(SpeedCalc.avgSpeed)));
         } else {
             locDisplay.setText("Setting up gps");
         }
