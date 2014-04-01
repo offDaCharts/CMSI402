@@ -127,7 +127,7 @@ public class ChronometerView extends FrameLayout {
     public void start() {
     	//gps
     	//gps.setup();
-        gps.getLocationListener().checkLocation();
+        //gps.getLocationListener().checkLocation();
     
     	mStarted = true;
         updateRunning();
@@ -199,7 +199,7 @@ public class ChronometerView extends FrameLayout {
         mCentiSecondView.setText(String.format("%02d", millis));
         
         current_location = "test";
-        gps.getLocationListener().checkLocation();
+        //gps.getLocationListener().checkLocation();
         
         //locDisplay.setText(current_location);
         

@@ -9,6 +9,7 @@ import android.location.LocationManager;
 import android.location.LocationProvider;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.content.Context;
@@ -25,8 +26,8 @@ public class GPSActivity extends Activity {
   private LocationManager locationManager;
   private String current_location = "not yet initialized";
   private String bestProvider;  
-  
-  public final class MyLocationListener implements LocationListener {	  
+  private final LocationListener gpsLocationListener =new LocationListener(){
+
       @Override
       public void onStatusChanged(String provider, int status, Bundle extras) {
           switch (status) {
@@ -61,66 +62,7 @@ public class GPSActivity extends Activity {
           Log.d("GPS_service", current_location);
       }
       
-      public void checkLocation() {
-    	  try {
-          Log.d("GPS_service", "here");
-          Criteria criteria = new Criteria();
-          bestProvider = locationManager.getBestProvider(criteria, true);
-          Log.d("GPS_service", "there");
-
-          Log.d("GPS_service", bestProvider);
-          Log.d("GPS_service", bestProvider);
-          Log.d("GPS_service", onLocationChange.toString());
-
-    		  locationManager.requestSingleUpdate(bestProvider, onLocationChange, null);
-    	  } catch (Exception e) {
-    	  }
-      }
-  }
-  
-  private final MyLocationListener gpsLocationListener =new MyLocationListener();
-  
-  
-  
-//  {
-//
-//      @Override
-//      public void onStatusChanged(String provider, int status, Bundle extras) {
-//          switch (status) {
-//          case LocationProvider.AVAILABLE:
-//              Log.d("GPS_service", "GPS available again\n");
-//              break;
-//          case LocationProvider.OUT_OF_SERVICE:
-//              Log.d("GPS_service", "GPS out of service\n");
-//              break;
-//          case LocationProvider.TEMPORARILY_UNAVAILABLE:
-//              Log.d("GPS_service", "GPS temporarily unavailable\n");
-//              break;
-//          }
-//      }
-//
-//      @Override
-//      public void onProviderEnabled(String provider) {
-//    	  Log.d("GPS_service", "GPS Provider Enabled\n");
-//      }
-//
-//      @Override
-//      public void onProviderDisabled(String provider) {
-//    	  Log.d("GPS_service", "GPS Provider Disabled\n");
-//      }
-//
-//      @Override
-//      public void onLocationChanged(Location location) {
-//          locationManager.removeUpdates(networkLocationListener);
-//          current_location = "New GPS location: "
-//                  + String.format("%9.6f", location.getLatitude()) + ", "
-//                  + String.format("%9.6f", location.getLongitude()) + "\n";
-//          Log.d("GPS_service", current_location);
-//      }
-//      
-//
-//      
-//  };
+  };
   private final LocationListener networkLocationListener = new LocationListener(){
 
       @Override
@@ -161,7 +103,7 @@ public class GPSActivity extends Activity {
         current_location = "through gps constructor";
 	}
 	
-	public MyLocationListener getLocationListener() {
+	public LocationListener getLocationListener() {
 		return this.gpsLocationListener;
 	}
 
