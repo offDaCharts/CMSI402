@@ -16,6 +16,7 @@ import android.content.Context;
 import android.content.Intent;
 
 
+
 /**
 * View used to display draw a running Chronometer.
 *
@@ -24,9 +25,9 @@ import android.content.Intent;
 public class GPSActivity extends Activity {
 
   private LocationManager locationManager;
-  private String current_location = "not yet initialized";
   private String bestProvider;  
-  private final LocationListener gpsLocationListener =new LocationListener(){
+  public static String current_location = "not yet initialized";
+  private final LocationListener gpsLocationListener = new LocationListener(){
 
       @Override
       public void onStatusChanged(String provider, int status, Bundle extras) {
@@ -100,7 +101,7 @@ public class GPSActivity extends Activity {
 
 	public GPSActivity() {
         Log.d("GPS_service", "gps constructor");
-        current_location = "through gps constructor";
+        GPSActivity.current_location = "through gps constructor";
 	}
 	
 	public LocationListener getLocationListener() {
@@ -112,7 +113,7 @@ public class GPSActivity extends Activity {
         Log.d("GPS_service", "Setting up gps ***********************");
 	    super.onCreate(icicle);
 	    //setContentView(R.layout.main);
-	    current_location = "creating gps";
+	    GPSActivity.current_location = "creating gps";
 
 	    locationManager=(LocationManager)getSystemService(LOCATION_SERVICE);
 
@@ -128,7 +129,7 @@ public class GPSActivity extends Activity {
         locationManager.requestSingleUpdate(bestProvider, onLocationChange, null);
 	
 	}
-	
+		
     @Override
     protected void onResume() {
         Log.d("GPS_service", "resuming ********");
@@ -153,15 +154,7 @@ public class GPSActivity extends Activity {
       public void onLocationChanged(Location loc) {
         String locationString=loc.getLatitude() + "," + loc.getLongitude();
         Log.d("GPS_service", locationString);
-        current_location = locationString;
-        
-        try {
-            TextView locDisplay = (TextView) findViewById(R.id.locationTextBox);
-	        locDisplay.setText(current_location);
-        } catch (Exception e) {
-        	Log.d("output", "could not find output");
-        }
-        
+        GPSActivity.current_location = locationString;        
       }
       
       public void onProviderDisabled(String provider) {

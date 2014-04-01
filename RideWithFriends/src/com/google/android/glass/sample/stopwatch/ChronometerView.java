@@ -85,6 +85,8 @@ public class ChronometerView extends FrameLayout {
         mMinuteView = (TextView) findViewById(R.id.minute);
         mSecondView = (TextView) findViewById(R.id.second);
         mCentiSecondView = (TextView) findViewById(R.id.centi_second);
+        
+    	Log.d("chrono", "location text box: " + R.id.locationTextBox);
         locDisplay = (TextView) findViewById(R.id.locationTextBox);
 
         setBaseMillis(SystemClock.elapsedRealtime());
@@ -201,7 +203,7 @@ public class ChronometerView extends FrameLayout {
         current_location = "test";
         //gps.getLocationListener().checkLocation();
         
-        //locDisplay.setText(current_location);
+        locDisplay.setText(GPSActivity.current_location);
         
         if (mChangeListener != null) {
             mChangeListener.onChange();
