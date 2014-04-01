@@ -24,9 +24,28 @@ import android.content.Intent;
 */
 public class GPSActivity extends Activity {
 
-  private LocationManager locationManager;
+  public static LocationManager locationManager;
+  public static LocationListener onLocationChange=new LocationListener() {
+      public void onLocationChanged(Location loc) {
+          GPSActivity.current_location = loc;        
+          Log.d("GPS_service", loc.toString());
+        }
+        
+        public void onProviderDisabled(String provider) {
+          // required for interface, not used
+        }
+        
+        public void onProviderEnabled(String provider) {
+          // required for interface, not used
+        }
+        
+        public void onStatusChanged(String provider, int status,
+                                      Bundle extras) {
+          // required for interface, not used
+        }
+      };
   private String bestProvider;  
-  public static String current_location = "not yet initialized";
+  public static Location current_location = null;
   private final LocationListener gpsLocationListener = new LocationListener(){
 
       @Override
@@ -56,11 +75,9 @@ public class GPSActivity extends Activity {
 
       @Override
       public void onLocationChanged(Location location) {
-          locationManager.removeUpdates(networkLocationListener);
-          current_location = "New GPS location: "
-                  + String.format("%9.6f", location.getLatitude()) + ", "
-                  + String.format("%9.6f", location.getLongitude()) + "\n";
-          Log.d("GPS_service", current_location);
+          GPSActivity.locationManager.removeUpdates(networkLocationListener);
+          GPSActivity.current_location = location;   
+          Log.d("GPS_service", location.toString());
       }
       
   };
@@ -93,6 +110,7 @@ public class GPSActivity extends Activity {
 
       @Override
       public void onLocationChanged(Location location) {
+    	  GPSActivity.current_location = location;
     	  Log.d("GPS_service", "New network location: "
                   + String.format("%9.6f", location.getLatitude()) + ", "
                   + String.format("%9.6f", location.getLongitude()) + "\n");
@@ -101,33 +119,39 @@ public class GPSActivity extends Activity {
 
 	public GPSActivity() {
         Log.d("GPS_service", "gps constructor");
-        GPSActivity.current_location = "through gps constructor";
 	}
-	
-	public LocationListener getLocationListener() {
-		return this.gpsLocationListener;
-	}
+
 
 	@Override
 	public void onCreate(Bundle icicle) {
         Log.d("GPS_service", "Setting up gps ***********************");
 	    super.onCreate(icicle);
 	    //setContentView(R.layout.main);
-	    GPSActivity.current_location = "creating gps";
 
-	    locationManager=(LocationManager)getSystemService(LOCATION_SERVICE);
+	    GPSActivity.locationManager=(LocationManager)getSystemService(LOCATION_SERVICE);
 
         Log.d("GPS_service", "got mgr");
         
         Criteria criteria = new Criteria();
-        bestProvider = locationManager.getBestProvider(criteria, true);
+        bestProvider = GPSActivity.locationManager.getBestProvider(criteria, true);
         Log.d("GPS_service", "best provider: " + bestProvider);        
         
-        locationManager.requestLocationUpdates(bestProvider, 1000, 1, gpsLocationListener);
-        locationManager.requestLocationUpdates(bestProvider, 1000, 1, networkLocationListener);
+        GPSActivity.locationManager.requestLocationUpdates(bestProvider, 1000, 1, gpsLocationListener);
+        GPSActivity.locationManager.requestLocationUpdates(bestProvider, 1000, 1, networkLocationListener);
         
-        locationManager.requestSingleUpdate(bestProvider, onLocationChange, null);
+        GPSActivity.locationManager.requestSingleUpdate(bestProvider, GPSActivity.onLocationChange, null);
+	}
 	
+	public void updateLoc() {
+		try {
+	        Criteria criteria = new Criteria();
+	        bestProvider = GPSActivity.locationManager.getBestProvider(criteria, true);
+			GPSActivity.locationManager.requestSingleUpdate(bestProvider, GPSActivity.onLocationChange, null);
+	        Log.d("GPS_service", "requested ********");
+
+		} catch (Exception e) {
+			
+		}
 	}
 		
     @Override
@@ -136,9 +160,9 @@ public class GPSActivity extends Activity {
         super.onResume();
        
         Criteria criteria = new Criteria();
-        bestProvider = locationManager.getBestProvider(criteria, true);
-        locationManager.requestLocationUpdates(bestProvider, 1000, 0, gpsLocationListener);
-        locationManager.requestLocationUpdates(bestProvider, 1000, 0, networkLocationListener);
+        bestProvider = GPSActivity.locationManager.getBestProvider(criteria, true);
+        GPSActivity.locationManager.requestLocationUpdates(bestProvider, 1000, 0, gpsLocationListener);
+        GPSActivity.locationManager.requestLocationUpdates(bestProvider, 1000, 0, networkLocationListener);
 
         Log.d("GPS_service", "resumed ********");
     }
@@ -146,29 +170,9 @@ public class GPSActivity extends Activity {
     @Override
     protected void onPause() {
         super.onPause();
-        locationManager.removeUpdates(networkLocationListener);
-        locationManager.removeUpdates(gpsLocationListener);
+        GPSActivity.locationManager.removeUpdates(networkLocationListener);
+        GPSActivity.locationManager.removeUpdates(gpsLocationListener);
     }
 
-  LocationListener onLocationChange=new LocationListener() {
-      public void onLocationChanged(Location loc) {
-        String locationString=loc.getLatitude() + "," + loc.getLongitude();
-        Log.d("GPS_service", locationString);
-        GPSActivity.current_location = locationString;        
-      }
-      
-      public void onProviderDisabled(String provider) {
-        // required for interface, not used
-      }
-      
-      public void onProviderEnabled(String provider) {
-        // required for interface, not used
-      }
-      
-      public void onStatusChanged(String provider, int status,
-                                    Bundle extras) {
-        // required for interface, not used
-      }
-    };
   
 }

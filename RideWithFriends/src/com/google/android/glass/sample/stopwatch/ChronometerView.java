@@ -46,14 +46,12 @@ public class ChronometerView extends FrameLayout {
     
     // About 24 FPS.
     private static final long DELAY_MILLIS = 41;
-
+    
     private final TextView mMinuteView;
     private final TextView mSecondView;
     private final TextView mCentiSecondView;
     private final TextView locDisplay;
     
-    private String current_location = "waiting";
-
     private boolean mStarted;
     private boolean mForceStart;
     private boolean mVisible;
@@ -200,17 +198,18 @@ public class ChronometerView extends FrameLayout {
         millis = (millis % TimeUnit.SECONDS.toMillis(1)) / 10;
         mCentiSecondView.setText(String.format("%02d", millis));
         
-        current_location = "test";
-        //gps.getLocationListener().checkLocation();
         
-        locDisplay.setText(GPSActivity.current_location);
+        gps.updateLoc();
+        
+        if(GPSActivity.current_location != null) {
+            locDisplay.setText("lon: "+GPSActivity.current_location.getLongitude());
+        } else {
+            locDisplay.setText("Setting up gps");
+        }
         
         if (mChangeListener != null) {
             mChangeListener.onChange();
         }
     }
-    
-    
-
-    
+       
 }
