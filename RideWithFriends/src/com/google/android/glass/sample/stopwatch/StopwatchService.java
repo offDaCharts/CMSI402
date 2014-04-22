@@ -104,11 +104,14 @@ public class StopwatchService extends Service {
 
             // Execute HTTP Post Request
             HttpResponse response = httpclient.execute(httppost);
+            Log.d(TAG, "posting success");
 
         } catch (ClientProtocolException e) {
             // TODO Auto-generated catch block
+            Log.d(TAG, "posting failed");
         } catch (IOException e) {
             // TODO Auto-generated catch block
+            Log.d(TAG, "posting fail");
         }
     } 
 
