@@ -13,7 +13,6 @@ from flask.ext.wtf import Form
 from wtforms import BooleanField, TextField, PasswordField, validators
 
 
-
 app = Flask(__name__)
 app.config.from_object(__name__)
 app.secret_key = 'this is the secret'
@@ -83,8 +82,14 @@ def stats():
     return render_template('stats.html')
 
 @app.route('/routes')
-def stats():
+def routes():
     return render_template('routes.html')
+
+@app.route("/saveride/<time>/<distance>", methods=["GET", "POST"])
+def save_ride(time, distance):
+    rides = db['rides']
+    rides.insert({'time': time, 'distance': distance})
+    return "submitted"
 
 # Create user loader function
 @login_manager.user_loader
