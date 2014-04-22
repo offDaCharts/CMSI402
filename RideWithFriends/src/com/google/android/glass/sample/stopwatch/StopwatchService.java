@@ -91,10 +91,12 @@ public class StopwatchService extends Service {
         return START_STICKY;
     }
     
-    public void postData() {
+    public void postData(double time, double distance) {
+    	//expects time in seconds and distance in miles
+    	
         // Create a new HttpClient and Post Header
         HttpClient httpclient = new DefaultHttpClient();
-        HttpPost httppost = new HttpPost("http://10.22.164.215:5656/saveride/1234/865");
+        HttpPost httppost = new HttpPost("http://10.22.164.215:5656/saveride/" + time + "/" + distance);
 
         try {
             // Add your data
@@ -122,6 +124,8 @@ public class StopwatchService extends Service {
             Log.d(TAG, "Ride Data");
             Log.d(TAG, "Time: " + (SpeedCalc.lastMillis - SpeedCalc.startMillis));
             Log.d(TAG, "Distance: " + SpeedCalc.distanceTraveled);
+            Log.d(TAG, "posting ride");
+            postData((SpeedCalc.lastMillis - SpeedCalc.startMillis)/1000.0, SpeedCalc.distanceTraveled * 0.000621371);
         }
         super.onDestroy();
     }
