@@ -2,6 +2,7 @@ import json
 import requests
 import flask
 
+from bson import json_util, ObjectId
 from flask import Flask, render_template, redirect, url_for, request, Response, abort, make_response, flash
 from flask import abort, flash, Flask, g, make_response, render_template, redirect, request, Response, session, url_for
 from pymongo import Connection
@@ -27,6 +28,11 @@ db = connection['rideWithFriends']
 @login_manager.user_loader
 def load_user(userid):
     return User.get(userid)
+
+class JSONEncoder(json.JSONEncoder):
+    def default(self, o):
+        return (isinstance(o, ObjectId) or isinstance(o, datetime.timedelta)
+            ) and str(o) or json.JSONEncoder.default(self, o)
 
 # # Create user model
 class User(UserMixin):
@@ -84,11 +90,23 @@ def stats():
 def routes():
     return render_template('routes.html')
 
-@app.route("/saveride/<time>/<distance>", methods=["GET", "POST"])
-def save_ride(time, distance):
+@app.route('/profile/<username>')
+def profile(username):
+    return render_template('profile.html')
+
+@app.route("/saveride/<time>/<distance>/<maxspeed>/<username>", methods=["GET", "POST"])
+def save_ride(time, distance, maxspeed, username):
     rides = db['rides']
-    rides.insert({'time': time, 'distance': distance})
+    rides.insert({'time': time, 'distance': distance, 'maxspeed': maxspeed, 'username': username})
     return "submitted"
+
+@app.route("/rides/<username>")
+def get_rides(username):
+    rides = db['rides']
+    cursor = rides.find({'username': username})
+    documentList = get_list_from_cursor(cursor)
+    print documentList
+    return JSONEncoder().encode(documentList) if documentList else '[]'
 
 # Create user loader function
 @login_manager.user_loader
@@ -130,6 +148,12 @@ def logout():
 @app.before_request
 def before_request():
     g.user = current_user
+
+def get_list_from_cursor(cursor):
+    list_of_documents = []
+    for document in cursor:
+        list_of_documents.append(document)
+    return list_of_documents
 
 # App Configuration
 # This section holds all application specific configuration options.

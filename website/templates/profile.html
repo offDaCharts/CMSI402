@@ -1,0 +1,35 @@
+{% extends "basePage.html" %}
+{%block title%}Ride With Friends{%endblock%}
+{%block css%}
+<link href="/static/css/home.css" rel="stylesheet">
+{%endblock%}
+{%block content%}
+<div class="container theme-showcase" role="main">
+
+<div class="jumbotron">
+  <div class="container">
+    <h3 id="name">Name</h3>
+    <img src="http://placehold.it/140x100" width="30%" height="30%"></img>
+    <div class="row">
+      <table id="ridesTable" class="table table-bordered table-striped">
+        <tr>
+          <td>Date</td>
+          <td>Distance</td>
+          <td>Time</td>
+          <td>Avg Speed</td>
+          <td>Max Speed</td>
+        </tr>
+      </table>
+    </div>
+
+    </div>
+  </div>
+</div>
+
+</div>
+{%endblock%}
+{%block javascript%}
+    <script src="/static/js/profile.js"></script>
+{%endblock%}
+
+
