@@ -68,7 +68,6 @@ class User(UserMixin):
     def get_password(self):
         return self.password
 
-      
 @app.route('/')
 def show_home():
     return render_template('home.html')

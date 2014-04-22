@@ -16,6 +16,14 @@
 
 package com.google.android.glass.sample.stopwatch;
 
+import java.io.IOException;
+
+import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+
 import com.google.android.glass.timeline.LiveCard;
 import com.google.android.glass.timeline.LiveCard.PublishMode;
 import com.google.android.glass.timeline.TimelineManager;
@@ -45,7 +53,7 @@ public class StopwatchService extends Service {
         mTimelineManager = TimelineManager.from(this);
         
         Log.d(TAG, "******************************************************");
-        Log.d(TAG, "Creating intent adn start activity");
+        Log.d(TAG, "Creating intent and start activity");
         Intent intent = new Intent(getBaseContext(), GPSActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         getApplication().startActivity(intent);
@@ -82,6 +90,25 @@ public class StopwatchService extends Service {
 
         return START_STICKY;
     }
+    
+    public void postData() {
+        // Create a new HttpClient and Post Header
+        HttpClient httpclient = new DefaultHttpClient();
+        HttpPost httppost = new HttpPost("http://10.22.164.215:5656/saveride/1234/865");
+
+        try {
+            // Add your data
+            //httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+
+            // Execute HTTP Post Request
+            HttpResponse response = httpclient.execute(httppost);
+
+        } catch (ClientProtocolException e) {
+            // TODO Auto-generated catch block
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+        }
+    } 
 
     @Override
     public void onDestroy() {
@@ -92,6 +119,9 @@ public class StopwatchService extends Service {
             }
             mLiveCard.unpublish();
             mLiveCard = null;
+            Log.d(TAG, "Ride Data");
+            Log.d(TAG, "Time: " + (SpeedCalc.lastMillis - SpeedCalc.startMillis));
+            Log.d(TAG, "Distance: " + SpeedCalc.distanceTraveled);
         }
         super.onDestroy();
     }

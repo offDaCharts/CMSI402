@@ -133,7 +133,6 @@ public class ChronometerView extends FrameLayout {
     
     	mStarted = true;
         updateRunning();
-      
     }
 
     /**
