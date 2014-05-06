@@ -17,6 +17,7 @@
 package com.google.android.glass.sample.stopwatch;
 
 import java.io.IOException;
+import java.lang.reflect.Method;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
@@ -30,6 +31,7 @@ import com.google.android.glass.timeline.TimelineManager;
 
 import android.app.PendingIntent;
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
 import android.util.Log;
@@ -44,13 +46,13 @@ public class StopwatchService extends Service {
 
     private ChronometerDrawer mCallback;
 
-    private TimelineManager mTimelineManager;
-    private LiveCard mLiveCard;
+    //private TimelineManager mTimelineManager;
+    public LiveCard mLiveCard;
 
     @Override
     public void onCreate() {
         super.onCreate();
-        mTimelineManager = TimelineManager.from(this);
+        //mTimelineManager = TimelineManager.from(this);
         
         Log.d(TAG, "******************************************************");
         Log.d(TAG, "Creating intent and start activity");
@@ -60,6 +62,20 @@ public class StopwatchService extends Service {
         Log.d(TAG, "Created");
 
     }
+    
+//    public static LiveCard getLiveCard(Context context, String tag) {
+//	  try {
+//	    Class<?> tmClass = Class.forName("com.google.android.glass.timeline.TimelineManager");
+//	    Method from = tmClass.getMethod("from", new Class[] { Context.class });
+//	    Object tm = from.invoke(tmClass, context);
+//	    Method createLiveCard = tmClass.getMethod("createLiveCard", new Class[] { String.class });
+//	    return (LiveCard) createLiveCard.invoke(tm, tag);
+//	  } catch (Exception e) {
+//	    // TimelineManager must be gone
+//	    return new LiveCard();
+//	  }
+//	}
+
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -70,7 +86,10 @@ public class StopwatchService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         if (mLiveCard == null) {
             Log.d(TAG, "Publishing LiveCard");
-            mLiveCard = mTimelineManager.createLiveCard(LIVE_CARD_TAG);
+            //mLiveCard = mTimelineManager.createLiveCard(LIVE_CARD_TAG);
+            
+            //mLiveCard = mTimelineManager.createLiveCard(LIVE_CARD_TAG);
+            mLiveCard = new LiveCard();
 
             // Keep track of the callback to remove it before unpublishing.
             mCallback = new ChronometerDrawer(this);

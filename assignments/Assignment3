@@ -1,0 +1,84 @@
+Problem 13.1, Kung page 346
+
+Refine the cruise control state diagram in Figure 13.12 with lower-level state diagrams. Check for consistency between the external events and the triggering events of the transitions as well as the response actions and messages to the external entities.
+
+
+Problem 13.6, Kung page 347
+
+A simple lawn mower agent is capable of mowing a rectangular shape area. The lawn is conceptually viewed as consisting of 2 foot by 2 foot squares, fitting the size of the solar-powered mower. Actions of the agent include:
+
+Move forward: the mower moves forward one square
+Turn left: the mower makes a left turn
+Turn right: the mower makes a right turn
+Cut (grass): the mower cust the grass in the current square
+Percept: the agent perceives the environment
+Turn on-off: the agent turns the power of the mower on or off
+The carden landscape may consist of lawns, trees, shrubs, buildings, pools, and more. The landscape may be represented by an m by n array of integers:
+
+A[i,j] = 10 means that an obstacle is in the square
+A[i,j] = 9 means there is a trap, such as a pool
+A[i,j] = 2 means there is grass in the square that needs to be cut
+A[i,j] = 1 means the grass in the square is already cut
+A[i,j] = 0 means that the square is pavement and it is safe to cross over it
+At any given time, the agent knows its direction (N, S, E, W) and location (i,j). Initially the agent is at A[0,0], facing east, and the mower is off. After mowing the lawn, the agent returns to the initial state, that is, at location A[0,0], facing east, and the mower is off.
+
+The agent maintains a set mowing schedule, for example, mowing once a week during the high-growth season, biweekly during the rest of the growing season, and not mowing during the rest of the year. The agent wakes up and mows the lawn according to the schedule.
+
+Do the following for this exercise:
+
+a. Construct a domain model for the mowing agent application
+b. Construct a state diagram for the mowing agent
+c. Apply the state pattern to this application
+d. DO NOT DO PART D OF THIS PROBLEM
+
+
+
+
+
+Problem 14.4, Kung page 366
+
+Produce an activity diagram that describes your academic department's undergraduate or graduate advising.
+
+
+
+
+
+Problem 20.1, Kung page 535
+
+For the average function presented in Figure 20.8 do the following:
+
+a. Write a brief functional description for the function
+b. Generate functional test cases based on the functional description
+c. Identify and specify the partitions and generate partition test cases
+d. Generate boundary value test cases
+e. DO NOT DO PART E OF THIS PROBLEM
+f. DO NOT DO PART f OF THIS PROBLEM
+
+
+
+
+
+Problem 21.6, Kung page 560
+
+Suppose you are hired by an IT consulting company to work on a major re-engineering project or a large, complex object-oriented software system. For this exercise, you have the freedom to assume the application domain and specific application of the software system. Assume that your team has 20 members. The members may work in groups. Write a brief article to do the following:
+
+a. Describe how the project would proceed.
+b. Describe which of the tasks you would like to be assigned to you, and why.
+c. Assume that you are assigned the tasks you would like. Describe how you would carry them out.
+
+
+
+
+
+Problem 22.5, Kung page 573
+
+Identify all possible software configuration items for each of the agile methods described in Chapter 2.
+
+
+
+
+
+Problem 24.5, Kung page 630
+
+Produce sequence diagrams for the three most useful use cases for the online car rental application. Include and indicate in the sequence diagrams security mechanisms to satisfy the security requirements formulated previously.
+[Instructor note: refer to exercise 24.2]
