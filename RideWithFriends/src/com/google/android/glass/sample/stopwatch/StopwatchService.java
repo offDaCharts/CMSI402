@@ -27,7 +27,8 @@ import org.apache.http.impl.client.DefaultHttpClient;
 
 import com.google.android.glass.timeline.LiveCard;
 import com.google.android.glass.timeline.LiveCard.PublishMode;
-import com.google.android.glass.timeline.TimelineManager;
+//Depricated from XE14
+//import com.google.android.glass.timeline.TimelineManager;
 
 import android.app.PendingIntent;
 import android.app.Service;
@@ -62,7 +63,8 @@ public class StopwatchService extends Service {
         Log.d(TAG, "Created");
 
     }
-    
+   
+// To make work with both 14XE and 16XE
 //    public static LiveCard getLiveCard(Context context, String tag) {
 //	  try {
 //	    Class<?> tmClass = Class.forName("com.google.android.glass.timeline.TimelineManager");
@@ -89,8 +91,10 @@ public class StopwatchService extends Service {
             //mLiveCard = mTimelineManager.createLiveCard(LIVE_CARD_TAG);
             
             //mLiveCard = mTimelineManager.createLiveCard(LIVE_CARD_TAG);
-            mLiveCard = new LiveCard();
-
+            try {
+            mLiveCard = new LiveCard(this, LIVE_CARD_TAG);
+            } catch (Exception e) {}
+            
             // Keep track of the callback to remove it before unpublishing.
             mCallback = new ChronometerDrawer(this);
             mLiveCard.setDirectRenderingEnabled(true).getSurfaceHolder().addCallback(mCallback);
