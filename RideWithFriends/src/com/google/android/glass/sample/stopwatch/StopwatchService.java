@@ -78,7 +78,6 @@ public class StopwatchService extends Service {
 //	  }
 //	}
 
-
     @Override
     public IBinder onBind(Intent intent) {
         return null;
@@ -124,11 +123,9 @@ public class StopwatchService extends Service {
         try {
             // Add your data
             //httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-
             // Execute HTTP Post Request
             HttpResponse response = httpclient.execute(httppost);
             Log.d(TAG, "posting success");
-
         } catch (ClientProtocolException e) {
             // TODO Auto-generated catch block
             Log.d(TAG, "posting failed");
