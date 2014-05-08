@@ -243,7 +243,6 @@ public class ChronometerView extends FrameLayout {
             byte[] post = EncodingUtils.getBytes("", "BASE64");
             webview.postUrl(url, post);
             Log.d("chrono view", "location update success");
-
         }
                 
         if(GPSActivity.current_location != null) {

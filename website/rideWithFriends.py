@@ -1,6 +1,8 @@
 import json
 import requests
 import flask
+import subprocess
+import smtplib
 
 from bson import json_util, ObjectId
 from flask import Flask, render_template, redirect, url_for, request, Response, abort, make_response, flash
@@ -12,6 +14,7 @@ from flask.ext import admin, login
 from flask.ext.login import LoginManager, login_user, UserMixin, login_required, logout_user, current_user
 from flask.ext.wtf import Form
 from wtforms import BooleanField, TextField, PasswordField, validators
+from email.mime.text import MIMEText
 
 
 app = Flask(__name__)
@@ -100,23 +103,57 @@ def save_ride(time, distance, maxspeed, username):
     rides.insert({'time': time, 'distance': distance, 'maxspeed': maxspeed, 'username': username})
     return "submitted"
 
+def send_email(emails, usernames):
+    GMAIL_USERNAME = 'ridewithfriendsbot'
+    GMAIL_PASSWORD = 'imokwithsharingthis'
+    recipients = ", ".join(emails)
+    print recipients
+    email_subject = "Ride Together!"
+    body_of_email = (" and ".join(usernames) + ", \nYou two are riding within 1km of eachother." + 
+        "You should meet up and Ride With Friends!" + 
+        "\n\nHave Fun!" +
+        "\n-RideWithFriends")
+
+    session = smtplib.SMTP('smtp.gmail.com', 587)
+    session.ehlo()
+    session.starttls()
+    session.login(GMAIL_USERNAME, GMAIL_PASSWORD)
+
+    headers = "\r\n".join(["from: " + GMAIL_USERNAME,
+                           "subject: " + email_subject,
+                           "to: " + recipients,
+                           "mime-version: 1.0",
+                           "content-type: text/html"])
+
+    content = headers + "\r\n\r\n" + body_of_email
+    session.sendmail(GMAIL_USERNAME, recipients, content)
+    
+
 @app.route("/updatelocation/<location>/<username>", methods=["GET", "POST"])
 def update_location(location, username):
     locations = db['locations']
     locations.update({'username': username}, {'location': location, 'username': username})
     [thisLat, thisLon] = map(float, location.split(','))
+    thisUser = db['users'].find_one({'username': username})
+    print thisUser
 
     cursor = locations.find({'username': {'$ne': username}})
     documentList = get_list_from_cursor(cursor)
 
     closenessThreshold = 0.01 #~1km in all directions
     for document in documentList:
+        print document
         try:
             [lat, lon] = map(float, document['location'].split(','))
-            if abs(thisLat - lat) < 0.01 and abs(thisLon - lon) < 0.01:
-                print "Heyyyy they're close enough"
         except:
             print 'bad location data'
+            continue            
+        if abs(thisLat - lat) < 0.01 and abs(thisLon - lon) < 0.01:
+            print "Heyyyy they're close enough"
+            closeUser = db['users'].find_one({'username': document['username']})
+            print closeUser
+            send_email([thisUser['email'], closeUser['email']], [thisUser['username'], closeUser['username']])
+
 
     return "submitted"
 
