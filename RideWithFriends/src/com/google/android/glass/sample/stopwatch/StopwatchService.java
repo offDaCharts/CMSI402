@@ -24,18 +24,24 @@ import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.util.EncodingUtils;
 
 import com.google.android.glass.timeline.LiveCard;
 import com.google.android.glass.timeline.LiveCard.PublishMode;
 //Depricated from XE14
 //import com.google.android.glass.timeline.TimelineManager;
 
+
+
+
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.IBinder;
 import android.util.Log;
+import android.webkit.WebView;
 
 /**
  * Service owning the LiveCard living in the timeline.
@@ -115,24 +121,49 @@ public class StopwatchService extends Service {
     
     public void postData(double time, double distance) {
     	//expects time in seconds and distance in miles
-    	
-        // Create a new HttpClient and Post Header
-        HttpClient httpclient = new DefaultHttpClient();
-        HttpPost httppost = new HttpPost("http://10.22.164.215:5656/saveride/" + time + "/" + distance);
+        Log.d(TAG, "1");
 
-        try {
-            // Add your data
-            //httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-            // Execute HTTP Post Request
-            HttpResponse response = httpclient.execute(httppost);
-            Log.d(TAG, "posting success");
-        } catch (ClientProtocolException e) {
-            // TODO Auto-generated catch block
-            Log.d(TAG, "posting failed");
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            Log.d(TAG, "posting fail");
-        }
+        // Create a new HttpClient and Post Header
+//        HttpClient httpclient = new DefaultHttpClient();
+//        //String username = "quin";
+//        //HttpPost httppost = new HttpPost("http://10.0.1.152:5656/saveride/" + time + "/" + distance + "/" + "0" + "/"+ username);
+//        HttpPost httppost = new HttpPost("http://10.0.1.152:5656/saveride/1000/10/0/quin");
+        String url = "http://10.0.1.152:5656/saveride/1000/10/0/quin";
+        Log.d(TAG, "2");
+
+        
+        //Intent intent = new Intent(Intent.ACTION_VIEW);
+//        Intent intent = new Intent(Intent.ACTION_SEND);
+//        Log.d(TAG, "3");
+//        //Intent.
+//        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//        intent.setData(Uri.parse(url));
+//        Log.d(TAG, "4");
+//
+//        startActivity(intent);
+//        Log.d(TAG, "posting success");
+        
+        Log.d(TAG, "3");
+        WebView webview = new WebView(this);
+        byte[] post = EncodingUtils.getBytes("", "BASE64");
+        webview.postUrl(url, post);
+        Log.d(TAG, "posting success");
+
+
+//        try {
+//            // Add your data
+//            //httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+//            // Execute HTTP Post Request
+//            Log.d(TAG, "posting");
+//            HttpResponse response = httpclient.execute(httppost);
+//            Log.d(TAG, "posting success");
+//        } catch (ClientProtocolException e) {
+//            // TODO Auto-generated catch block
+//            Log.d(TAG, "posting failed");
+//        } catch (IOException e) {
+//            // TODO Auto-generated catch block
+//            Log.d(TAG, "posting fail");
+//        }
     } 
 
     @Override
