@@ -37,11 +37,11 @@ class JSONEncoder(json.JSONEncoder):
 # # Create user model
 class User(UserMixin):
 
-    def __init__(self, uid=None, username=None, password=None):
+    def __init__(self, uid=None, username=None, password=None, email=None):
         query = {}
-        if uid is not None: query['_id'] = uid 
+        #if uid is not None: query['_id'] = uid 
         if username is not None: query['username'] = username 
-        if password is not None: query['password'] = bcrypt.generate_password_hash(password + 'garlic_salt') 
+        #if password is not None: query['password'] = bcrypt.generate_password_hash(password + 'garlic_salt') 
         existing = db['users'].find_one(query) 
 
         if existing is not None:
@@ -50,7 +50,7 @@ class User(UserMixin):
             self.password = existing['password']
         else:
             password_hash = bcrypt.generate_password_hash(password + 'garlic_salt')
-            self.id = db['users'].insert({'username': username, 'password': password_hash})
+            self.id = db['users'].insert({'username': username, 'email': email ,'password': password_hash})
             self.username = username
             self.password = password_hash
         self.active = True
@@ -118,7 +118,6 @@ def update_location(location, username):
         except:
             print 'bad location data'
 
-
     return "submitted"
 
 @app.route("/rides/<username>")
@@ -136,6 +135,7 @@ def load_user(userid):
 
 class LoginForm(Form):
     username = TextField('Username', [validators.Required()])
+    email = TextField('Email', [validators.Required()])
     password = PasswordField('Password', [validators.Required()])
     remember = BooleanField('Remember Me', default=False)
 
@@ -143,13 +143,13 @@ class LoginForm(Form):
 def login():
     form = LoginForm()
     if form.validate_on_submit():
-        user = User(username=form.username.data, password=form.password.data)
+        user = User(username=form.username.data, password=form.password.data, email=form.email.data)
         if user.active is not False:
             login_user(user, remember=form.remember.data)
-            flash("Welcome to PLAnet, %s!" % user.username, 'success')
+            flash("Welcome to Ride With Friends, %s!" % user.username, 'success')
             return redirect(request.args.get('next') or url_for("show_home"))
         else:
-            flash("Sorry, but your login attempt did not succeed.", 'danger')
+            flash("Login failed", 'danger')
 
     return render_template("login.html", form=form)
 
@@ -161,7 +161,6 @@ def unauthorized():
 @app.route("/logout", methods=["GET", "POST"])
 @login_required
 def logout():
-    flash("Thank you, come again!")
     logout_user()
     return redirect(url_for("show_home"))
 
