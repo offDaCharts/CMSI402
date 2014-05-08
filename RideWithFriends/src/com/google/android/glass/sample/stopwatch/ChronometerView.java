@@ -248,7 +248,8 @@ public class ChronometerView extends FrameLayout {
         if(GPSActivity.current_location != null) {
         	DecimalFormat df = new DecimalFormat("0.00");
             locDisplay.setText("Speed: " + df.format(SpeedCalc.metersPerMillisToMph(SpeedCalc.instantSpeed))
-            		+ " Avg: " + df.format(SpeedCalc.metersPerMillisToMph(SpeedCalc.avgSpeed)));
+            		//+ " Avg: " + df.format(SpeedCalc.metersPerMillisToMph(SpeedCalc.avgSpeed)));
+            		+ " Dist: " + df.format(SpeedCalc.distanceTraveled * 0.000621371));
         } else {
             locDisplay.setText("Setting up gps");
         }
