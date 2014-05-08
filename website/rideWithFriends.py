@@ -100,6 +100,12 @@ def save_ride(time, distance, maxspeed, username):
     rides.insert({'time': time, 'distance': distance, 'maxspeed': maxspeed, 'username': username})
     return "submitted"
 
+@app.route("/updatelocation/<location>/<username>", methods=["GET", "POST"])
+def update_location(location, username):
+    locations = db['locations']
+    locations.update({'username': username}, {'location': location, 'username': username})
+    return "submitted"
+
 @app.route("/rides/<username>")
 def get_rides(username):
     rides = db['rides']

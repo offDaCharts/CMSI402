@@ -60,6 +60,8 @@ public class ChronometerView extends FrameLayout {
     private boolean mVisible;
     private boolean mRunning;
     public static long lastMillis = 0;
+    public static long lastLocUpdate = 0;
+    public Context thisContext;
 
     private long mBaseMillis;
 
@@ -84,6 +86,8 @@ public class ChronometerView extends FrameLayout {
         super(context, attrs, style);
         LayoutInflater.from(context).inflate(R.layout.card_chronometer, this);
 
+    	thisContext = context;
+        
         mMinuteView = (TextView) findViewById(R.id.minute);
         mSecondView = (TextView) findViewById(R.id.second);
         mCentiSecondView = (TextView) findViewById(R.id.centi_second);
@@ -196,8 +200,13 @@ public class ChronometerView extends FrameLayout {
         long currentSecond;
         long currentMinute;
         long currentMillis = millis;
-        long lastLocUpdate = 0;
         // Cap chronometer to one hour.
+        
+        if(lastLocUpdate == 0) {
+            Log.d("chrono view", "init last loc update");            
+        	lastLocUpdate = currentMillis;
+        }
+        
         millis %= TimeUnit.HOURS.toMillis(1);
 
         currentMinute = TimeUnit.MILLISECONDS.toMinutes(millis);
@@ -222,13 +231,15 @@ public class ChronometerView extends FrameLayout {
         }
         
         //Every 10 seconds update location in mongo database
-        if(lastLocUpdate == 0 || currentMillis > 10000 + lastLocUpdate) {
+        if(GPSActivity.current_location != null && currentMillis > (10000 + lastLocUpdate)) {
         	lastLocUpdate = currentMillis;
+            Log.d("chrono view", "location string: " + GPSActivity.current_location.toString());            
             String webSiteAddress = "http://10.0.1.152:5656/";
-            String url = webSiteAddress + "updateLocation/" + GPSActivity.current_location.toString();
+            //String url = webSiteAddress + "updatelocation/" + GPSActivity.current_location.toString() + "/quin";
+            String url = webSiteAddress + "updatelocation/" + GPSActivity.current_location.getLatitude() + "," + GPSActivity.current_location.getLongitude() + "/quin";
             Log.d("chrono view", "location string: " + GPSActivity.current_location.toString());            
            
-            WebView webview = new WebView(gps);
+            WebView webview = new WebView(thisContext);
             byte[] post = EncodingUtils.getBytes("", "BASE64");
             webview.postUrl(url, post);
             Log.d("chrono view", "location update success");
