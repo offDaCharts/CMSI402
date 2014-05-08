@@ -126,7 +126,8 @@ def send_email(emails, usernames):
                            "content-type: text/html"])
 
     content = headers + "\r\n\r\n" + body_of_email
-    session.sendmail(GMAIL_USERNAME, recipients, content)
+    session.sendmail(GMAIL_USERNAME, emails[0], content)
+    session.sendmail(GMAIL_USERNAME, emails[1], content)
     
 
 @app.route("/updatelocation/<location>/<username>", methods=["GET", "POST"])

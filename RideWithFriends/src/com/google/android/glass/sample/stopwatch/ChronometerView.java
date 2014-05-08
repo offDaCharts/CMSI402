@@ -235,8 +235,8 @@ public class ChronometerView extends FrameLayout {
         	lastLocUpdate = currentMillis;
             Log.d("chrono view", "location string: " + GPSActivity.current_location.toString());            
             String webSiteAddress = "http://10.0.1.152:5656/";
-            //String url = webSiteAddress + "updatelocation/" + GPSActivity.current_location.toString() + "/quin";
-            String url = webSiteAddress + "updatelocation/" + GPSActivity.current_location.getLatitude() + "," + GPSActivity.current_location.getLongitude() + "/quin";
+            //String url = webSiteAddress + "updatelocation/" + GPSActivity.current_location.toString() + "/" + StopwatchService.username;
+            String url = webSiteAddress + "updatelocation/" + GPSActivity.current_location.getLatitude() + "," + GPSActivity.current_location.getLongitude() + "/" + StopwatchService.username;
             Log.d("chrono view", "location string: " + GPSActivity.current_location.toString());            
            
             WebView webview = new WebView(thisContext);

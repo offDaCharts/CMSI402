@@ -37,7 +37,8 @@ public class StopwatchService extends Service {
 
     private static final String TAG = "StopwatchService";
     private static final String LIVE_CARD_TAG = "stopwatch";
-    
+    public static final String username = "quin";
+
     private ChronometerDrawer mCallback;
 
     //private TimelineManager mTimelineManager;
@@ -109,7 +110,7 @@ public class StopwatchService extends Service {
     	//expects time in seconds and distance in miles, max speed in mph
     	
         String webSiteAddress = "http://10.0.1.152:5656/";
-        String url = webSiteAddress + "saveride/" + time + "/" + distance + "/" + maxSpeed + "/quin";
+        String url = webSiteAddress + "saveride/" + time + "/" + distance + "/" + maxSpeed + "/" + StopwatchService.username;
        
         WebView webview = new WebView(this);
         byte[] post = EncodingUtils.getBytes("", "BASE64");
