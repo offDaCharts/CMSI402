@@ -166,6 +166,14 @@ def get_rides(username):
     print documentList
     return JSONEncoder().encode(documentList) if documentList else '[]'
 
+@app.route("/rides")
+def get_all_rides():
+    rides = db['rides']
+    cursor = rides.find()
+    documentList = get_list_from_cursor(cursor)
+    print documentList
+    return JSONEncoder().encode(documentList) if documentList else '[]'
+
 # Create user loader function
 @login_manager.user_loader
 def load_user(userid):
