@@ -119,51 +119,18 @@ public class StopwatchService extends Service {
         return START_STICKY;
     }
     
-    public void postData(double time, double distance) {
-    	//expects time in seconds and distance in miles
+    public void postData(double time, double distance, double maxSpeed) {
+    	//expects time in seconds and distance in miles, max speed in mph
         Log.d(TAG, "1");
 
         // Create a new HttpClient and Post Header
-//        HttpClient httpclient = new DefaultHttpClient();
-//        //String username = "quin";
-//        //HttpPost httppost = new HttpPost("http://10.0.1.152:5656/saveride/" + time + "/" + distance + "/" + "0" + "/"+ username);
-//        HttpPost httppost = new HttpPost("http://10.0.1.152:5656/saveride/1000/10/0/quin");
-        String url = "http://10.0.1.152:5656/saveride/1000/10/0/quin";
-        Log.d(TAG, "2");
-
-        
-        //Intent intent = new Intent(Intent.ACTION_VIEW);
-//        Intent intent = new Intent(Intent.ACTION_SEND);
-//        Log.d(TAG, "3");
-//        //Intent.
-//        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//        intent.setData(Uri.parse(url));
-//        Log.d(TAG, "4");
-//
-//        startActivity(intent);
-//        Log.d(TAG, "posting success");
-        
-        Log.d(TAG, "3");
+        String url = "http://10.0.1.152:5656/saveride/" + time + "/" + distance + "/" + maxSpeed + "/quin";
+       
         WebView webview = new WebView(this);
         byte[] post = EncodingUtils.getBytes("", "BASE64");
         webview.postUrl(url, post);
         Log.d(TAG, "posting success");
 
-
-//        try {
-//            // Add your data
-//            //httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-//            // Execute HTTP Post Request
-//            Log.d(TAG, "posting");
-//            HttpResponse response = httpclient.execute(httppost);
-//            Log.d(TAG, "posting success");
-//        } catch (ClientProtocolException e) {
-//            // TODO Auto-generated catch block
-//            Log.d(TAG, "posting failed");
-//        } catch (IOException e) {
-//            // TODO Auto-generated catch block
-//            Log.d(TAG, "posting fail");
-//        }
     } 
 
     @Override
@@ -180,7 +147,7 @@ public class StopwatchService extends Service {
             Log.d(TAG, "Distance: " + SpeedCalc.distanceTraveled);
             Log.d(TAG, "posting ride");
             
-            postData((SpeedCalc.lastMillis - SpeedCalc.startMillis)/1000.0, SpeedCalc.distanceTraveled * 0.000621371);
+            postData((SpeedCalc.lastMillis - SpeedCalc.startMillis)/1000.0, SpeedCalc.distanceTraveled * 0.000621371, SpeedCalc.maxSpeed * 2.23694);
         }
         super.onDestroy();
     }

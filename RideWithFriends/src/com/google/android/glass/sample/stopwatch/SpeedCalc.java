@@ -12,6 +12,7 @@ public class SpeedCalc {
 	public static long lastMillis = 0;
 	public static long timeDelta = 0;
 	public static double instantSpeed = 0;	//meters/ms
+	public static double maxSpeed = 0;	//meters/ms
 	public static double avgSpeed = 0;	//meters/ms
 	
 	
@@ -38,6 +39,9 @@ public class SpeedCalc {
 			lastMillis = millis;
 			
 			instantSpeed = distanceDelta/timeDelta;
+			if(instantSpeed > maxSpeed) {
+				maxSpeed = instantSpeed;
+			}
 	    	Log.d("speed calc", "instant: " + instantSpeed);
 			avgSpeed = distanceTraveled/(millis-startMillis);
 	    	Log.d("speed calc", "avg: " + avgSpeed);
