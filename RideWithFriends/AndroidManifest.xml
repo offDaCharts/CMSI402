@@ -33,10 +33,10 @@
         android:icon="@drawable/ic_lap"
         android:label="@string/app_name" >
         <activity
-            android:name="com.google.android.glass.sample.stopwatch.MenuActivity"
-            android:enabled="true"
+			android:name="com.google.android.glass.sample.stopwatch.MenuActivity"
             android:label="@string/app_name"
-            android:theme="@style/MenuTheme" >
+            android:theme="@style/MenuTheme"
+            android:enabled="true" >
         </activity>
 
         <service

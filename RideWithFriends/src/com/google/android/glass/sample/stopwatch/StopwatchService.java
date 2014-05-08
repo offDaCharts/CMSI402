@@ -148,6 +148,7 @@ public class StopwatchService extends Service {
             Log.d(TAG, "Time: " + (SpeedCalc.lastMillis - SpeedCalc.startMillis));
             Log.d(TAG, "Distance: " + SpeedCalc.distanceTraveled);
             Log.d(TAG, "posting ride");
+            
             postData((SpeedCalc.lastMillis - SpeedCalc.startMillis)/1000.0, SpeedCalc.distanceTraveled * 0.000621371);
         }
         super.onDestroy();

@@ -136,8 +136,8 @@ public class GPSActivity extends Activity {
         bestProvider = GPSActivity.locationManager.getBestProvider(criteria, true);
         Log.d("GPS_service", "best provider: " + bestProvider);        
         
-        GPSActivity.locationManager.requestLocationUpdates(bestProvider, 1000, 1, gpsLocationListener);
-        GPSActivity.locationManager.requestLocationUpdates(bestProvider, 1000, 1, networkLocationListener);
+        //GPSActivity.locationManager.requestLocationUpdates(bestProvider, 1000, 1, gpsLocationListener);
+        //GPSActivity.locationManager.requestLocationUpdates(bestProvider, 1000, 1, networkLocationListener);
         GPSActivity.locationManager.requestSingleUpdate(bestProvider, GPSActivity.onLocationChange, null);
 	}
 	
@@ -169,6 +169,13 @@ public class GPSActivity extends Activity {
         super.onPause();
         GPSActivity.locationManager.removeUpdates(networkLocationListener);
         GPSActivity.locationManager.removeUpdates(gpsLocationListener);
+    }
+
+    @Override
+    protected void onDestroy() {
+        GPSActivity.locationManager.removeUpdates(networkLocationListener);
+        GPSActivity.locationManager.removeUpdates(gpsLocationListener);
+        super.onDestroy();
     }
 
   

@@ -140,6 +140,7 @@ public class ChronometerView extends FrameLayout {
      */
     public void stop() {
         mStarted = false;
+        gps.finish();
         updateRunning();
     }
 
@@ -216,8 +217,7 @@ public class ChronometerView extends FrameLayout {
         	lastMillis = currentMillis;
             gps.updateLoc();
         }
-        
-        
+                
         if(GPSActivity.current_location != null) {
         	DecimalFormat df = new DecimalFormat("0.00");
             locDisplay.setText("Speed: " + df.format(SpeedCalc.metersPerMillisToMph(SpeedCalc.instantSpeed))
