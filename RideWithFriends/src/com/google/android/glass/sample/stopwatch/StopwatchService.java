@@ -20,11 +20,8 @@ import org.apache.http.util.EncodingUtils;
 
 import com.google.android.glass.timeline.LiveCard;
 import com.google.android.glass.timeline.LiveCard.PublishMode;
-//Depricated from XE14
+//Deprecated from XE14
 //import com.google.android.glass.timeline.TimelineManager;
-
-
-
 
 import android.app.PendingIntent;
 import android.app.Service;
@@ -40,11 +37,12 @@ public class StopwatchService extends Service {
 
     private static final String TAG = "StopwatchService";
     private static final String LIVE_CARD_TAG = "stopwatch";
-
+    
     private ChronometerDrawer mCallback;
 
     //private TimelineManager mTimelineManager;
     public LiveCard mLiveCard;
+    public Intent gpsIntent;
 
     @Override
     public void onCreate() {
@@ -53,9 +51,9 @@ public class StopwatchService extends Service {
         
         Log.d(TAG, "******************************************************");
         Log.d(TAG, "Creating intent and start activity");
-        Intent intent = new Intent(getBaseContext(), GPSActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        getApplication().startActivity(intent);
+        gpsIntent = new Intent(getBaseContext(), GPSActivity.class);
+        gpsIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        getApplication().startActivity(gpsIntent);
         Log.d(TAG, "Created");
 
     }
@@ -109,9 +107,7 @@ public class StopwatchService extends Service {
     
     public void postData(double time, double distance, double maxSpeed) {
     	//expects time in seconds and distance in miles, max speed in mph
-        Log.d(TAG, "1");
-
-        // Create a new HttpClient and Post Header
+    	
         String webSiteAddress = "http://10.0.1.152:5656/";
         String url = webSiteAddress + "saveride/" + time + "/" + distance + "/" + maxSpeed + "/quin";
        
@@ -137,6 +133,7 @@ public class StopwatchService extends Service {
             
             postData((SpeedCalc.lastMillis - SpeedCalc.startMillis)/1000.0, SpeedCalc.distanceTraveled * 0.000621371, SpeedCalc.maxSpeed * 2.23694);
         }
+        getApplication().stopService(gpsIntent);
         super.onDestroy();
     }
 }

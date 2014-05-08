@@ -37,7 +37,7 @@ import java.util.concurrent.TimeUnit;
  * At each second change, update the TextView text.
  */
 public class CountDownView extends FrameLayout {
-    private static final String TAG = "CountDownView";
+    //private static final String TAG = "CountDownView";
 
     /**
      * Interface to listen for changes in the countdown.

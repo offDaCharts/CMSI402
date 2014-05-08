@@ -22,12 +22,14 @@ import android.os.SystemClock;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.webkit.WebView;
 import android.widget.FrameLayout;
 import android.widget.TextView;
-import android.content.Intent;
 
 import java.text.DecimalFormat;
 import java.util.concurrent.TimeUnit;
+
+import org.apache.http.util.EncodingUtils;
 
 
 /**
@@ -194,6 +196,7 @@ public class ChronometerView extends FrameLayout {
         long currentSecond;
         long currentMinute;
         long currentMillis = millis;
+        long lastLocUpdate = 0;
         // Cap chronometer to one hour.
         millis %= TimeUnit.HOURS.toMillis(1);
 
@@ -213,9 +216,23 @@ public class ChronometerView extends FrameLayout {
         	if(GPSActivity.current_location != null) {
         		SpeedCalc.tick(currentMillis, GPSActivity.current_location);
         	}
-        	//one second has passed, update gps
+        	//three seconds has passed, update gps
         	lastMillis = currentMillis;
             gps.updateLoc();
+        }
+        
+        //Every 10 seconds update location in mongo database
+        if(lastLocUpdate == 0 || currentMillis > 10000 + lastLocUpdate) {
+        	lastLocUpdate = currentMillis;
+            String webSiteAddress = "http://10.0.1.152:5656/";
+            String url = webSiteAddress + "updateLocation/" + GPSActivity.current_location.toString();
+            Log.d("chrono view", "location string: " + GPSActivity.current_location.toString());            
+           
+            WebView webview = new WebView(gps);
+            byte[] post = EncodingUtils.getBytes("", "BASE64");
+            webview.postUrl(url, post);
+            Log.d("chrono view", "location update success");
+
         }
                 
         if(GPSActivity.current_location != null) {

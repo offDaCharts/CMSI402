@@ -9,12 +9,6 @@ import android.location.LocationManager;
 import android.location.LocationProvider;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.widget.FrameLayout;
-import android.widget.TextView;
-import android.content.Context;
-import android.content.Intent;
-
 
 
 /**
