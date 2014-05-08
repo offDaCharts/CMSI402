@@ -16,14 +16,6 @@
 
 package com.google.android.glass.sample.stopwatch;
 
-import java.io.IOException;
-import java.lang.reflect.Method;
-
-import org.apache.http.HttpResponse;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EncodingUtils;
 
 import com.google.android.glass.timeline.LiveCard;
@@ -36,9 +28,7 @@ import com.google.android.glass.timeline.LiveCard.PublishMode;
 
 import android.app.PendingIntent;
 import android.app.Service;
-import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.IBinder;
 import android.util.Log;
 import android.webkit.WebView;
@@ -114,8 +104,6 @@ public class StopwatchService extends Service {
             // TODO(alainv): Jump to the LiveCard when API is available.
         }
         
-        
-
         return START_STICKY;
     }
     
@@ -124,13 +112,13 @@ public class StopwatchService extends Service {
         Log.d(TAG, "1");
 
         // Create a new HttpClient and Post Header
-        String url = "http://10.0.1.152:5656/saveride/" + time + "/" + distance + "/" + maxSpeed + "/quin";
+        String webSiteAddress = "http://10.0.1.152:5656/";
+        String url = webSiteAddress + "saveride/" + time + "/" + distance + "/" + maxSpeed + "/quin";
        
         WebView webview = new WebView(this);
         byte[] post = EncodingUtils.getBytes("", "BASE64");
         webview.postUrl(url, post);
         Log.d(TAG, "posting success");
-
     } 
 
     @Override
