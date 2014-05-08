@@ -104,6 +104,21 @@ def save_ride(time, distance, maxspeed, username):
 def update_location(location, username):
     locations = db['locations']
     locations.update({'username': username}, {'location': location, 'username': username})
+    [thisLat, thisLon] = map(float, location.split(','))
+
+    cursor = locations.find({'username': {'$ne': username}})
+    documentList = get_list_from_cursor(cursor)
+
+    closenessThreshold = 0.01 #~1km in all directions
+    for document in documentList:
+        try:
+            [lat, lon] = map(float, document['location'].split(','))
+            if abs(thisLat - lat) < 0.01 and abs(thisLon - lon) < 0.01:
+                print "Heyyyy they're close enough"
+        except:
+            print 'bad location data'
+
+
     return "submitted"
 
 @app.route("/rides/<username>")
